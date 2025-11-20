@@ -7,7 +7,8 @@
     - Week 3 (To Do)
     - Week 4 (To Do)
     - Week 5 (To Do)
-2. Gebruikte Data-Sets
+2. Projectvoorstel
+3. Gebruikte Data-Sets
     - Consumptie Antibiotica
     - Bevolkingsdichtheid
     - 65 plussers
@@ -15,10 +16,10 @@
     - Gemiddeld inkomen per inwoner
     - Opleidingsniveau
     - TopoJSON
-3. Gebruik AI en bronnen
-4. Technisch/Implementatie
+4. Gebruik AI en bronnen
+5. Technisch/Implementatie
     - Opzet choropleth en TopoJSON
-5. Projectvoorstel
+6. Initieel Projectvoorstel
 
 ## Logboek
 
@@ -66,6 +67,66 @@ Tijdens week 1 zijn de volgende zaken geïmplementeerd:
     * Verbeteren layout
     * Tonen reële data uit de data-sets
 * Schrijven basis-documentatie
+
+## Projectvoorstel
+### Algemeen
+* Stelling: gemeentes waar meer 65 plussers wonen zullen een hogere antibiotica consumptie vertonen
+* Confounders:
+  * Gemeentes met een hogere bevolkingsdichtheid gebruiken meer antibtiotica (hogere transmissie van bacteriën)
+  * Gemeentes met een bevolking die gemiddeld een lagere SES (sociaal economische status) score heeft, zullen meer antibiotica gebruiken (slechtere hygiëne)
+### Op te leveren artifacts
+* Verschillende afbeeldingen
+  * 3 ingekleurde kaarten van Vlaanderen
+    * Correlatie aantal 65+ en consumptie antibiotica (aantal ddd)
+    * Coëfficiënt sociaal economische status (SES) per gemeente
+    * Bevolkingsdichtheid per gemeente
+  * 3 scatterplots
+    * Percentage 65+ en consumptie antibiotica
+    * Bevolkingsdichteid en consumptie antibiotica
+    * SES en consumptie antibiotica
+
+### Definities
+* Definitie Antibiotica consumptie
+  * Aantal terugbetaalde DDD (standaard dagdosis) antibioticum per 1.000 rechthebbenden per dag tussen 1 juli van het jaar  en 30 juni van het volgende kalenderjaar (ambulant)
+* Definitie Activiteitsgraad
+  * De activiteitsgraad wordt berekend als het aandeel van de beroepsbevolking in de totale bevolking op arbeidsleeftijd (van 20 tot en met 64 jaar). 
+  * Detail: bij de totale bevolking op arbeidsleeftijd (van 20 tot en met 64 jaar) maakt men een onderscheid tussen de niet-beroepsactieve bevolking en de beroepsbevolking op arbeidsleeftijd:
+    * De niet-beroepsactieve bevolking bestaat uit die personen die niet werken, niet beschikbaar zijn voor een job  en/of niet actief op zoek zijn naar een job. 
+    * De beroepsbevolking bestaat uit diegenen die aan het werk zijn (werkenden) en zij die beschikbaar zijn voor een job en actief op zoek naar werk (werkloze(n))
+
+### Berekeningen
+* Berekening SES
+  * Voorstel: z-scores berekenen voor:
+    * Gemiddeld Inkomen per inwoner (aantal euro)
+    * Activiteitsgraad (Percentage van de bevolking dat aan de slag is)
+    * Opleidingsgraad (onbekend, laag, midden, hoog)
+      * Elke categorie (behalve onbekend) een getal geven (vb. 1, 2 en 3)
+      * Daarna gemiddelde berekenen van alle gemeenten
+      * Daarna z-score berekenen = (opleiding_graad_gemeente - gemiddelde_opleiding_graad_gemeente) / standaard afwijking
+    * Daarna alle z-scores optellen = SES coëfficiënt
+
+### Inkleuren kaartje
+* Inkleuren kaart verband graad 65+ en ddd consumptie antibiotica
+  * Defined daily dose = metriek die gebruikt wordt voor het monitoren van trends inzake antibiotica gebruik
+  * Inkleuren per gemeente of er een correlatie is tussen aantal 65+ en aantal ddd consumpties per gemeente is of niet?
+    * Bereken z-score voor aantal 65 plussers      (bepaling schaling)
+    * Bereken z-score voor aantal ddd consumpties  (bepaling schaling)
+    * Als hoge 65+graad en hoog aantal ddd = correlatie
+    * Als lage 65+graad en laag aantal ddd = correlatie
+    * Als hoge 65+graad en laag aantal ddd = geen correlatie
+    * Als lage 65+graad en hoog aantal ddd = geen correlatie
+    * 2 kleuren: rood voor verband/correlatie en blauw voor geen verband
+  * Gradatie berekenen: vermenigvuldigen z-scores (eventuele mogelijkheid)
+* Inkleuren kaart SES per gemeente
+* Inkleuren kaart bevolkingsdichtheid per gemeente
+
+### Scatterplots
+* Graad 65+ en Antibiotica Consumptie
+  * Graad van 65+: percentage van de bevolking in de gemeente
+* Bevolkingsdichtheid (inw/km2) en Antibiotica Consumptie (Verhouding per 1000 rechthebbenden)
+  * Bevolkingsdichteid = inwoners / vierkante km
+* SES en Antibiotica Consumptie
+  * SES = zelfberekende coëfficient aan de hand van activiteitsgraad, opleidingsniveau en gemiddeld inkomen per inwoner
 
 ## Gebruikte Data-Sets
 Onderstaande data-sets bevatten gegevens voor elke Vlaamse gemeente inzake de aspecten die hieronder staan opgelijst. De content hieronder komt uit de link en is aangevuld met een schema die de data-structuur kort weergeeft (maakt het makkelijker voor de lezer).
@@ -290,7 +351,7 @@ folium.Choropleth(geo_data=topojson_data,
 #### Gebruikte bronnen
 * TopoJSON-based Choropleth Visualization using Folium (Yash Sanghvi, Aug 13, 2020). https://medium.com/tech-carnot/topojson-based-choropleth-visualization-using-folium-471113fa5964
 
-## Projectvoorstel 
+## Initieel Projectvoorstel 
 
 De beschrijving van het project hieronder vindt zijn oorsprong in mail-communicatie met de lector op 16/10/2025.
 
