@@ -31,7 +31,7 @@ Tijdens week 1 zijn de volgende zaken geïmplementeerd:
   * Implementatie
     * Alle gemeentes van België worden afgebeeld via een Choropleth
     * De inkleuring berust voorlopig op mock-data
-  * To do
+  * To Do/Optimalisaties
     * Beperken van het afbeelden van gemeentes tot het Vlaamse grondgebied
     * Opvullen met reële data afkomstig uit de data-sets
     * Kleurenweergave dient aangepast te worden zodat de kleuren onderscheiden kunnen blijven worden voor mensen die leiden aan een van de verschillende vormen van kleurenblindheid
@@ -42,7 +42,7 @@ Tijdens week 1 zijn de volgende zaken geïmplementeerd:
     * Er wordt gebruik gemaakt van de Seaborn library
     * De scatterplot is heel erg eenvoudig qua layout
     * Er wordt enkel mock-data getoond
-  * To do
+  * To Do/Optimalisaties
     * Opvullen met reële data uit de data-sets
     * Opzoeken en toepassen layout verbeteringen puur vanuit data-visualisatie perspectief
       * Te gebruiken bron: Fundamentals of Data Visualization - A Primer on Making Informative and Compelling Figures (Clause O. Wilke, 2019)
@@ -55,7 +55,7 @@ Tijdens week 1 zijn de volgende zaken geïmplementeerd:
   * Implementatie
     * Ingestion, Data-Quality checks en Transformation van data-set Bevolkingsdichtheid
     * Ingestion, Data-Quality checks en Transformation van data-set Antibiotica Consumptie
-  * To do
+  * To Do/Optimalisaties
     * Eventuele verdere cleanup, checks en transformaties schrijven (afhankelijk van verdere noden)
 * Implementatie Use Case 1: scatterplot van Bevolkingsdichtheid en Antibiotica Consumptie
   * Algemeen
@@ -63,10 +63,28 @@ Tijdens week 1 zijn de volgende zaken geïmplementeerd:
   * Implementatie
     * Extra controles voor invariants te checken tussen beide data-sets
     * Opzet scatterplot met mock-data
-  * To do
+  * To Do/Optimalisaties
     * Verbeteren layout
     * Tonen reële data uit de data-sets
 * Schrijven basis-documentatie
+
+### Week 2
+Tijdens week 2 zijn de volgende zaken geïmplementeerd:
+* Algemeen
+  * Afwerken van de eerste scatterplot met reële data & berekening pearson correlatie
+  * Aligneren gemeentes van de data-csv files met de TopoJSON gemeentes
+* Implementatie
+  * Aanpassing scatterplot Bevolkingsdichtheid en Antibiotica consumptie
+    * Plotten van reële data uit de beide data-sets
+    * Implementatie berekening Pearson correlatie-coëfficiënt en p-waarde (SciPy library)
+  * Aanpassing Data Ingestion, cleanup en transformaties voor Bevolkingsdichtheid en Antibiotica-consumptie
+    * Op voorhand filteren aan de hand van het werkingsjaar (op deze manier wordt de data-set vanaf het begin beperkt tot de relevante data)
+    * Fusiegemeentes opsplitsen in aparte records zodat data-csv zo goed mogelijk afgestemd wordt op de TopoJSON data
+    * Refactoring code, oa: definiëren van gezamenlijke code voor:
+      * scatterplot
+      * data transformaties bij inladen aparte data-sets
+* To Do/Optimalisaties
+  * Voorlopig worden de verschillen tussen de gemeentes in de csv data-sets en de TopoJSON weerspiegelt in een aantal constanten die vervolgens gebruikt worden in de verwerking van de alignering tussen de gemeentes van de csv data-sets en de TopoJSON. Een mogelijke optimalisatie is dat deze dynamisch bepaald zouden worden door de data-sets met mekaar te vergelijken.
 
 ## Projectvoorstel
 ### Algemeen
