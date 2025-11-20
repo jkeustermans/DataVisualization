@@ -1,8 +1,298 @@
 # Data Visualization – Projectvoorstel
 
-## Log mailverkeer
+# Inhoudsopgave
+1. Logboek
+    - Week 1
+    - Week 2 (To Do)
+    - Week 3 (To Do)
+    - Week 4 (To Do)
+    - Week 5 (To Do)
+2. Gebruikte Data-Sets
+    - Consumptie Antibiotica
+    - Bevolkingsdichtheid
+    - 65 plussers
+    - Activiteitsgraad
+    - Gemiddeld inkomen per inwoner
+    - Opleidingsniveau
+    - TopoJSON
+3. Gebruik AI en bronnen
+4. Technisch/Implementatie
+    - Opzet choropleth en TopoJSON
+5. Projectvoorstel
 
-Mail Possemiers Philippe 16/10/2025
+## Logboek
+
+### Week 1
+Tijdens week 1 zijn de volgende zaken geïmplementeerd:
+* Prototype van een kaartje die de gemeentes in België weergeeft
+  * Algemeen
+    * Het genereren van een Chloropeth was een onbekend aspect in het project. Alhoewel ik geen fundamentele problemen voorzag leek het me het veiligste om deze 'technical debt' naar voor te trekken in het ontwikkelproces. De last van het uitzoeken van deze techniciteit is (deels) opgelost.
+  * Implementatie
+    * Alle gemeentes van België worden afgebeeld via een Choropleth
+    * De inkleuring berust voorlopig op mock-data
+  * To do
+    * Beperken van het afbeelden van gemeentes tot het Vlaamse grondgebied
+    * Opvullen met reële data afkomstig uit de data-sets
+    * Kleurenweergave dient aangepast te worden zodat de kleuren onderscheiden kunnen blijven worden voor mensen die leiden aan een van de verschillende vormen van kleurenblindheid
+* Prototype scatterplot
+  * Algemeen
+    * Ook hier is er geopteerd om de een prototype te implementeren omdat er (kort) diende uitgezocht te worden hoe een scatterplot via Seaborn geïmplementeerd diende te worden. Ook hiermee is een andere pure techniciteit van de baan
+  * Implementatie
+    * Er wordt gebruik gemaakt van de Seaborn library
+    * De scatterplot is heel erg eenvoudig qua layout
+    * Er wordt enkel mock-data getoond
+  * To do
+    * Opvullen met reële data uit de data-sets
+    * Opzoeken en toepassen layout verbeteringen puur vanuit data-visualisatie perspectief
+      * Te gebruiken bron: Fundamentals of Data Visualization - A Primer on Making Informative and Compelling Figures (Clause O. Wilke, 2019)
+* Data Ingestion van Individuele Data-Sets
+  * Algemeen
+    * Bedoeling was om een eerste versie van de code te schrijven voor het inladen van een enkelvoudige data-set, de gegevens te controleren en te transformeren. Op deze manier: 
+      * Kunnen we er zeker van zijn dat de gegevens voldoen aan een minimaal aantal eisen voor de verdere verwerking. De bedoeling is om een aantal potentieel onvoorspelbare zaken uit te sluiten tijdens de verdere verwerking (vb. een gemeente waar een jaar aan data ontbreekt)
+      * Maken we onderscheid tussen raw-data en een opgeschoonde (clean) data. Indien er later nog extra cleanup of transformaties dienen te gebeuren dan kan er altijd naar deze data-frame variable worden verwezen. We breiden de transformaties/cleanup dan uit in deze voorziene sectie terwijl we de variabele naam behouden. In onze verdere codebase is er dus geen impact
+      * Wordt er een 'standaard structuur' voorzien in de notebook ter voorbereiding van het uitwerken van de Use Cases
+  * Implementatie
+    * Ingestion, Data-Quality checks en Transformation van data-set Bevolkingsdichtheid
+    * Ingestion, Data-Quality checks en Transformation van data-set Antibiotica Consumptie
+  * To do
+    * Eventuele verdere cleanup, checks en transformaties schrijven (afhankelijk van verdere noden)
+* Implementatie Use Case 1: scatterplot van Bevolkingsdichtheid en Antibiotica Consumptie
+  * Algemeen
+    * Er worden hier 2 dimensies getoond en er worden hiervoor 2 aparte data-sets gekoppeld. Dit betekent dat we ons dienen te vergewissen van een aantal bijkomende controles zodat we zeker zijn dat de data-quality die betrekking heeft op de aspecten tussen de 2 data-sets voldoende gecontroleerd zijn
+  * Implementatie
+    * Extra controles voor invariants te checken tussen beide data-sets
+    * Opzet scatterplot met mock-data
+  * To do
+    * Verbeteren layout
+    * Tonen reële data uit de data-sets
+* Schrijven basis-documentatie
+
+## Gebruikte Data-Sets
+Onderstaande data-sets bevatten gegevens voor elke Vlaamse gemeente inzake de aspecten die hieronder staan opgelijst. De content hieronder komt uit de link en is aangevuld met een schema die de data-structuur kort weergeeft (maakt het makkelijker voor de lezer).
+
+### Consumptie Antibiotica
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/antibioticumconsumptie
+* Definitie: Aantal terugbetaalde DDD (standaard dagdosis) antibioticum per 1.000 rechthebbenden per dag tussen 1 juli van het jaar en 30 juni van het volgende kalenderjaar – ambulante praktijk
+* Eenheid: dosissen
+* Ratio: per 1000 rechthebbenden
+* Teller: Aantal terugbetaalde dagdosissen
+* Noemer: Aantal rechthebbenden
+* Opmerking: De DDD (Defined Daily Dose) is een internationale meeteenheid gehanteerd door de wereldgezondheidsorganisatie (WHO) die toelaat het verbruik van diverse geneesmiddelen te vergelijken
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Verhouding per 1000 rechthebbenden
+
+### Bevolkingsdichtheid
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/bevolkingsdichtheid
+* Definitie: aantal inwoners per vierkante kilometer
+* Eenheid: personen
+* Ratio: per vierkante kilometer
+* Teller: aantal inwoners
+* Noemer: totale oppervlakte
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Aantal inwoners
+	* Totale oppervlakte
+	* Dichtheid (inw/km2)
+
+### 65 plussers
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/65-plussers
+* Eenheid: personen
+* Ratio: procent
+* Teller: Aantal inwoners van 65 jaar en ouder
+* Noemer: Aantal inwoners 
+* Opmerking:
+	Het gaat om de volledige bevolking “de jure”. Dit is de bevolking zoals geregistreerd in de registers van de burgerlijke stand van de gemeenten. Het is de 
+	som van het bevolkingsregister (Belgen woonachtig in een Belgische gemeente + vreemdelingen met permanente verblijfsvergunning), het vreemdelingenregister 
+	(vreemdelingen met een tijdelijke verblijfsvergunning), het register van ambtenaren van de Europese Unie en het register van geprivilegieerde vreemdelingen 
+	van de NATO of van SHAPE. Asielzoekers die ingeschreven zijn in het wachtregister horen NIET bij de bevolking “de jure” en zijn dus niet meegeteld in deze cijfers. 
+	Worden eveneens niet meegeteld in de bevolking: Belgen in het buitenland (ingeschreven in de consulaire registers van de diplomatieke zendingen en consulaire 
+	posten in het buitenland) en ambassadepersoneel en gevolg want zij zijn vrijgesteld. De bevolking de jure kan bijgevolg verschillen van de bevolking de facto. 
+	Dit is de feitelijke bevolking, waartoe zowel personen ingeschreven in het wachtregister als ook niet bij de gemeente aangegeven personen inbegrepen zijn.
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Categorie
+	* Aantal inwoners van 65 jaar en ouder
+	* Aantal inwoners
+	* Procent (%)
+
+### Activiteitsgraad
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/activiteitsgraad
+* Definitie: De activiteitsgraad wordt berekend als het aandeel van de beroepsbevolking in de totale bevolking op arbeidsleeftijd (van 20 tot en met 64 jaar). Bij de totale bevolking op arbeidsleeftijd (van 20 tot en met 64 jaar) maakt men een onderscheid tussen de niet-beroepsactieve bevolking en de beroepsbevolking op arbeidsleeftijd. De niet-beroepsactieve bevolking bestaat uit die personen die niet werken, niet beschikbaar zijn voor een job en/of niet actief op zoek zijn naar een job. De beroepsbevolking bestaat uit diegenen die aan het werk zijn (werkenden) en zij die beschikbaar zijn voor een job en actief op zoek naar werk (werkloze(n))
+* Eenheid: werkenden
+* Ratio: procent
+* Teller: beroepsbevolking van 20-64 jaar
+* Noemer: aantal inwoners van 20 tot en met 64 jaar
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Beroepsbevolking van 20 tot en met 64 jaar
+	* Aantal inwoners van 20 tot en met 64 jaar
+	* Procent (%)
+
+### Gemiddeld inkomen per inwoner
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/gemiddeld-inkomen-inwoner
+* Definitie: Gemiddeld netto belastbaar inkomen per inwoner. Het totale netto belastbaar inkomen bestaat uit alle netto inkomsten van alle inwoners min de aftrekbare uitgaven. Het netto belastbaar inkomen is de som van alle inkomsten uit onroerende goederen (huuropbrengsten en inkomsten uit woningen), inkomsten uit en opbrengsten van roerende goederen en kapitalen (dividenden, intresten…), beroepsinkomsten (wedden en lonen, ziekte-uitkeringen, werkloosheidsuitkeringen, (brug-)pensioenuitkeringen, winsten, baten, wedden van bedrijfsleiders en meewerkende echtgenoten, na aftrek van de beroepskosten) en diverse inkomsten, verminderd met de aftrekbare uitgaven (zoals kinderopvang, onderhoudsuitkeringen, giften…). Deze gegevens zijn gebaseerd op de aangiften in de personenbelasting die door de FOD Financiën aan Statbel worden aangeleverd. Het vermelde jaar is het inkomstenjaar, het jaar dus waarin de gegevens in de aangiften zijn "verdiend". Vanaf 2022 zijn ook de aangiften van de 15-17 jarigen mee opgenomen.
+* Eenheid: euro
+* Ratio: per inwoner
+* Teller: Totaal netto belastbaar inkomen
+* Noemer: Aantal inwoners
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Totaal netto belastbaar inkomen (in miljoen euro)
+	* Aantal inwoners
+	* Gemiddeld inkomen (in euro), per inwoner
+
+### Opleidingsniveau
+* Link: https://gemeente-stadsmonitor.vlaanderen.be/over-de-monitor/overzicht-indicatoren/scholingsgraad
+* Definitie: Aandeel inwoners van 25 tot en met 64 jaar naar scholingsgraad. De scholingsgraad wordt ingedeeld in drie grote groepen aan de hand van het hoogst behaalde  diploma: laaggeschoolden (maximaal lager secundair onderwijs), middengeschoolden (secundair onderwijs afgewerkt of in het bezit van een einddiploma postsecundair niet-hoger onderwijs) en hooggeschoolden (diploma hoger onderwijs). Als er geen gegevens over de scholingsgraad gekend zijn, worden zij ondergebracht in de categorie ‘onbekend’.
+* Eenheid: personen
+* Ratio: procent
+* Teller: Aantal inwoners van 25-64 jaar per scholingsgraad
+* Noemer: Aantal inwoners van 25-64 jaar
+* Schema
+	* Gemeente
+	* NIS-code
+	* Indicator
+	* Jaar
+	* Scholingsgraad
+	* Aantal inwoners van 25-64 jaar per scholingsgraad
+	* Aantal inwoners van 25-64 jaar
+	* Procent (%)
+
+### TopoJSON
+Verder wordt er een TopoJOSN gebruikt voor het inkleuren van het kaartje. Deze kan gevonden worden op de link: https://github.com/arneh61/Belgium-Map
+
+## Gebruik AI en bronnen
+Er werd/wordt tijdens de initiële fase en de ontwikkelingsfase van het project gebruik gemaakt van AI.
+* Tijdens de initiële fase werd dit vooral gebruikt om een aantal statistische zaken af te wegen (oa. hoe kan ik een SES-score bepalen).
+* Tijdens de ontwikkelingsfase is het gebruikt om bepaalde PySpark/Python zaken af te checken. Meestal is dit puur syntactisch gerelateerd. AI wordt soms ook gebruikt als klankbord inzake het bedenken van een oplossingsmethode voor een bepaald technisch probleem.
+* De code die geschreven is is grotendeels manueel geschreven. Elke stukje code dat gegenereerd is door een LLM is manueel nagekeken en wordt volledig begrepen.
+Verder wordt er gebruikt gemaakt van traditionele bronnen:
+* Cursusmateriaal van het vak
+* Boeken:
+  * Fundamentals of Data Visualization - A Primer on Making Informative and Compelling Figures (Clause O. Wilke, 2019)
+  * Data Analysis with Python and Spark (Jonathan Rioux, 2022)
+  * Spark in Action 2nd edition (Jean-Georges Perrin, 2020)
+* Artikels op het internet
+* Google Search
+
+## Technisch/Implementatie
+
+In deze sectie worden een aantal technische zaken besproken. Meestal draait het om technologieën of libraries die gebruikt zijn geweest en die een extra woordje uitleg vereisen om aan te tonen dat deze techniciteiten 'begrepen' worden. De zaken worden kort beschreven in bullet-points.
+
+### Opzet choropleth en TopoJSON
+* We hebben een TopoJSON file van de gemeentes van België
+* Een TopoJSON heeft een specifieke structuur
+```json
+{
+		"type":"Topology",
+		"arcs":[ lijst van lijsten met arcs ],
+		"transform":{
+		  "scale":[
+			 0.00004696985808298872,
+			 0.000029667298308087575
+		  ],
+		  "translate":[
+			 2.5553555488587563,
+			 49.49721527099615
+		  ]
+	    },
+		"objects":{
+		  "BEL_adm4":{
+			 "type":"GeometryCollection",
+			 "geometries":[
+				{
+				   "arcs":[
+					  [
+						 0,
+						 1,
+						 2,
+						 3,
+						 4,
+						 5,
+						 6
+					  ]
+				   ],
+				   "type":"Polygon",
+				   "properties":{
+					  "ID_0":23,
+					  "ISO":"BEL",
+					  "NAME_0":"Belgium",
+					  "ID_1":1,
+					  "NAME_1":"Bruxelles",
+					  "ID_2":1,
+					  "NAME_2":"Bruxelles",
+					  "ID_3":1,
+					  "NAME_3":"Brussel",
+					  "ID_4":1,
+					  "NAME_4":"Anderlecht",
+					  "VARNAME_4":"",
+					  "TYPE_4":"Commune",
+					  "ENGTYPE_4":"Commune",
+					  "NAME_3 - NEW":"ARR-BRUSSEL HOOFDSTAD",
+					  "NAME_2 - NEW":"PRO-BRUSSEL",
+					  "NAME_4 - NEW":"GEM-ANDERLECHT"
+				   }
+				},
+				...
+			}
+		}
+	}
+```
+* TopoJSON is variant op GeoJSON die de geometrie topologisch opslaagt (leidt tot kleinere dataset)
+* Structuur van een TopoJSON:
+  * Arc = lijst van punten die samen een lijn vormen
+    * Eerste coördinaat is absoluut
+    * De volgende zijn relatief tov de eerste coordinaat (vb. x eenheden naar links, y eenheden naar boven)
+* objects - BEL_adm4
+  * Hier staan de geometrieën (lijnen)
+  * Een geometrie verwijst naar arcs door een index te specificeren
+    * Voorbeeld: arcs: [1, 2, 4] staat voor: de veelhoek bestaat uit punten die verwijzen naar de algemene lijst van arcs (bovenaan het JSON document)
+  * properties
+    * Bevat de meta-data zoals de naam van de gemeente...
+* Het deel waar we in geïnteresseerd zijn voor het tekenen van de kaart bevint zich onder het 'objects' attribute.
+  * arcs: bevat alle arcs naar waar via een index naar verwezen zal worden (verwijzingen staan in de geometries sectie)
+  * BEL_adm4.geometries.arcs: bevat getallen die indices vormen voor de globale arcs lijst
+  * BEL_adm4.geometries.properties.NAME_4: geeft de naam weer van de gemeente
+* Code uitleg
+  * Voorbeelcode:
+```python
+folium.Choropleth(geo_data=topojson_data,
+                      topojson='objects.BEL_adm4',
+                      key_on='feature.properties.NAME_4',
+                      data=df,
+                      columns=['gemeente', 'aantal'],
+                      fill_color='GnBu',
+                      fill_opacity=0.7,
+                      line_opacity=0.5).add_to(m)
+```
+  * topojson verwijst naar variabele die json content bevat die in het gemeente-geometrie bestand staat
+  * key_on = verwijst naar het path in de TopoJSON structuur die de gemeente aangeeft en zal gerelateerd zijn aan de 1ste kolom in het columns attribute (dat ook de gemeente bevat)
+  * data = bevat de (CSV) content met de voorbeeld data in (gemeente en aantal)
+  * columns = geeft de naam van de kolommen aan in de data die de gemeente aanduiden die ingekleurd dient te worden samen met de kolomnaam die de waarde aangeeft voor die gemeente
+  * fill_color, opacity,... = de layout configuratie
+
+#### Gebruikte bronnen
+* TopoJSON-based Choropleth Visualization using Folium (Yash Sanghvi, Aug 13, 2020). https://medium.com/tech-carnot/topojson-based-choropleth-visualization-using-folium-471113fa5964
+
+## Projectvoorstel 
+
+De beschrijving van het project hieronder vindt zijn oorsprong in mail-communicatie met de lector op 16/10/2025.
 
 Beste
 
