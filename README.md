@@ -73,18 +73,32 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
 * Algemeen
   * Afwerken van de eerste scatterplot met reële data & berekening pearson correlatie
   * Aligneren gemeentes van de data-csv files met de TopoJSON gemeentes
+  * Herevaluatie visualisatie verband tussen 'Aandeel 65+' en 'Antibiotica consumptie'
 * Implementatie
   * Aanpassing scatterplot Bevolkingsdichtheid en Antibiotica consumptie
     * Plotten van reële data uit de beide data-sets
     * Implementatie berekening Pearson correlatie-coëfficiënt en p-waarde (SciPy library)
   * Aanpassing Data Ingestion, cleanup en transformaties voor Bevolkingsdichtheid en Antibiotica-consumptie
     * Op voorhand filteren aan de hand van het werkingsjaar (op deze manier wordt de data-set vanaf het begin beperkt tot de relevante data)
-    * Fusiegemeentes opsplitsen in aparte records zodat data-csv zo goed mogelijk afgestemd wordt op de TopoJSON data
+    * Fusiegemeentes opsplitsen in aparte records zodat data-csv zo goed mogelijk afgestemd wordt op de TopoJSON data.
+      * Reden: deze fusiegemeentes stonden als 1 record in de csv datasets en diende uitgepslitst te worden zodat deze ingekleurd konden worden op de kaart
+    * Toevoegen extra deelgemeentes aan csv datasets. Deze deelgemeentes staan in de TopoJSON gedefinieerd maar niet in de csv datasets. De extra gemeentes zijn deelgemeentes van deze hoofdgemeentes en zullen de data van de hoofdgemeentes toegewezen krijgen.
+      * Reden: omdat deze deelgemeentes niet gekend waren in de csv datasets maar wel in de TopoJSON, resulteerde dat in niet-ingekleurde delen van de kaart
     * Refactoring code, oa: definiëren van gezamenlijke code voor:
       * scatterplot
       * data transformaties bij inladen aparte data-sets
+  * Analyse van anomalieën inzake CSV data-sets en TopoJSON
+    * Vergelijken data-sets en uitleg Wikipedia (extra info inzake fusies)
+    * Documenteren in Jupyter Notebook
+  * Herbekijken visualisatie-strategie inkleuren kaart (verband aantal 65+ en antibiotica consumptie)
+    * Analyse (met behulp van AI)
+    * Documenteren van deze strategie
+    * Zie sectie 'Inkleuren kaartje' (mbt. antibiotica consumptie en aandeel 65+)
 * To Do/Optimalisaties
   * Voorlopig worden de verschillen tussen de gemeentes in de csv data-sets en de TopoJSON weerspiegelt in een aantal constanten die vervolgens gebruikt worden in de verwerking van de alignering tussen de gemeentes van de csv data-sets en de TopoJSON. Een mogelijke optimalisatie is dat deze dynamisch bepaald zouden worden door de data-sets met mekaar te vergelijken.
+  * Uitzoeken layout optimalisaties Scatterplots (bron: Fundamentals of Data Visualization)
+  * Uitzoeken layout optimalisaties Choropleths (bron: Fundamentals of Data Visualization)
+  * Analyse van correctheid van data-visualisatie voor verband 'aandeel 65+' en 'antbiotica consumptie' (eerste aanzet reeds gegeven - zie hierboven)
 
 ## Projectvoorstel
 ### Algemeen
@@ -127,14 +141,52 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
 * Inkleuren kaart verband graad 65+ en ddd consumptie antibiotica
   * Defined daily dose = metriek die gebruikt wordt voor het monitoren van trends inzake antibiotica gebruik
   * Inkleuren per gemeente of er een correlatie is tussen aantal 65+ en aantal ddd consumpties per gemeente is of niet?
-    * Bereken z-score voor aantal 65 plussers      (bepaling schaling)
-    * Bereken z-score voor aantal ddd consumpties  (bepaling schaling)
-    * Als hoge 65+graad en hoog aantal ddd = correlatie
-    * Als lage 65+graad en laag aantal ddd = correlatie
-    * Als hoge 65+graad en laag aantal ddd = geen correlatie
-    * Als lage 65+graad en hoog aantal ddd = geen correlatie
-    * 2 kleuren: rood voor verband/correlatie en blauw voor geen verband
-  * Gradatie berekenen: vermenigvuldigen z-scores (eventuele mogelijkheid)
+    * Initieel idee:
+      * Uitwerking
+        * Bereken z-score voor aantal 65 plussers      (bepaling schaling)
+        * Bereken z-score voor aantal ddd consumpties  (bepaling schaling)
+        * Als hoge 65+graad en hoog aantal ddd = correlatie
+        * Als lage 65+graad en laag aantal ddd = correlatie
+        * Als hoge 65+graad en laag aantal ddd = geen correlatie
+        * Als lage 65+graad en hoog aantal ddd = geen correlatie
+        * 2 kleuren: rood voor verband/correlatie en blauw voor geen verband
+        * Gradatie berekenen: vermenigvuldigen z-scores (eventuele mogelijkheid)
+      * Probleem:
+        * Je kan geen correlatie voorzien per gemeente want je hebt maar 1 datapunt per gemeente
+        * Wat wordt aanzien als grote verschillen tussen de Z-scores?
+    * Status: in review
+      * Alternatieven:
+        * Bivariate choropleth map
+          * X as wordt opgedeeld in vb. 3 stukken: laag,gemiddeld en hoog 65+ aandeel
+          * Y as wordt opgedeeld in vb. 3 stukken: laag, gemiddeld, hoog
+          * Men kan 3 x 3 matrix maken van alle combinaties
+          * Elke combinatie krijgt een kleur
+        * Regressiemodel
+          * Je kan een enkelvoudige regressie doorvoeren maar de regressielijn geeft enkel het verband weer voor ALLE gemeentes en niet per gemeente
+          * Als je per gemeente wil zien of deze 'afwijkend' is dan kan je dit aan de residu van het punt voor die gemeente bepalen
+            * Residue(E(gemeente)) = E(gemeente) - Y(gemeente-voorspelling)
+            * Als E(gemeente) > 0 = meer antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
+            * Als E(gemeente) < 0 = minder antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
+          * Dit kan je wél visualiseren
+          * Wanneer is er sprake van een sterke afwijking?
+            * Methode A: op basis van Z-score vh residu
+              * Bereken Z(Egemeente) = (E(gemeente) - E(gemiddeld)) / standaardafwijking van E
+              * Als |Z| > 2 dan zéér atypisch
+              * Als |Z| = ongeveer 1 dan mild afwijkend
+              * Als |Z| < 1 dan normaal gedrag
+            * Methode B: op basis van absolute waarde vh residu
+              * Men kan een drempel kiezen
+              * Vb. top 10% meest positieve residuen = opvallend veel gebruik
+              * Vb. top 10% meest negatieve residuen = opvallend weinig gebruik
+              * Dit is een veel gebruikte aanpak in de gezondheidsgeografie
+            * Methode C: ruimtelijke statistiek (Moran's I / GI*)
+              * Enkel als je wil weten of deze ruimte een hotspot is in haar omgeving
+              * Cluster berekeningen
+                * High-High clusters = buurgemeentes en zichzelf hoog = echte hotspot
+                * Low-Low cluster = structureel weinig gebruik
+                * High-Low = uitschieter
+                * Low-High = negatieve uitschieter
+              * Dit lijkt me niet erg toepasbaar/relevant voor dit project
 * Inkleuren kaart SES per gemeente
 * Inkleuren kaart bevolkingsdichtheid per gemeente
 
@@ -268,6 +320,7 @@ Verder wordt er gebruikt gemaakt van traditionele bronnen:
   * Data Analysis with Python and Spark (Jonathan Rioux, 2022)
   * Spark in Action 2nd edition (Jean-Georges Perrin, 2020)
 * Artikels op het internet
+* Wikipedia voor de fusie van de gemeentes te achterhalen
 * Google Search
 
 ## Technisch/Implementatie
