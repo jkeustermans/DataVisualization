@@ -90,6 +90,9 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
   * Analyse van anomalieën inzake CSV data-sets en TopoJSON
     * Vergelijken data-sets en uitleg Wikipedia (extra info inzake fusies)
     * Documenteren in Jupyter Notebook
+  * Data Ingestion, cleanup en transformaties implementeren voor csv dataset 'aandeel 65+'
+    * Deze keer geïmplementeerd met data-frames in combinatie met SQL
+    * Reden: andere vorm van coderen dan rechtstreeks met RDD's te werken (leer-proces andere manier van implementeren)
   * Herbekijken visualisatie-strategie inkleuren kaart (verband aantal 65+ en antibiotica consumptie)
     * Analyse (met behulp van AI)
     * Documenteren van deze strategie
