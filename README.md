@@ -19,6 +19,7 @@
 4. Gebruik AI en bronnen
 5. Technisch/Implementatie
     - Opzet choropleth en TopoJSON
+    - Kleurenblindhied
 6. Initieel Projectvoorstel
 
 ## Logboek
@@ -85,8 +86,8 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
     * Toevoegen extra deelgemeentes aan csv datasets. Deze deelgemeentes staan in de TopoJSON gedefinieerd maar niet in de csv datasets. De extra gemeentes zijn deelgemeentes van deze hoofdgemeentes en zullen de data van de hoofdgemeentes toegewezen krijgen.
       * Reden: omdat deze deelgemeentes niet gekend waren in de csv datasets maar wel in de TopoJSON, resulteerde dat in niet-ingekleurde delen van de kaart
     * Refactoring code, oa: definiëren van gezamenlijke code voor:
-      * scatterplot
-      * data transformaties bij inladen aparte data-sets
+      * Scatterplot
+      * Data transformaties bij inladen aparte data-sets
   * Analyse van anomalieën inzake CSV data-sets en TopoJSON
     * Vergelijken data-sets en uitleg Wikipedia (extra info inzake fusies)
     * Documenteren in Jupyter Notebook
@@ -96,11 +97,14 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
   * Toevoegen scatterplot voor antibiotica consumptie en percentage 65+
     * Toont of er al dan niet een correlatie is tussen deze sets
     * Controles maken ook gebruik van data-frames icm. SQL ipv RDD's (leer-proces andere manier van implementeren)
+  * Aanpassen inkleuring kaart met gemeentes om rekening te houden met kleurenblindheid
+    * Reden: 8% vd mannen is kleurenblind en 0.5% vd vrouwen waardoor dit een significante groep vormt waar men best rekening mee houdt tijdens de visualisatie
+    * Opmerking: ik heb voorlopig geen kleurenpallet gevonden dat rekening houdt met 'Rood-groen'-kleurenblindheid
   * Refactorings in de code (optimalisatie)
-  * Herbekijken visualisatie-strategie inkleuren kaart (verband aantal 65+ en antibiotica consumptie)
-    * Analyse (met behulp van AI)
-    * Documenteren van deze strategie
-    * Zie sectie 'Inkleuren kaartje' (mbt. antibiotica consumptie en aandeel 65+)
+  * Herbekijken visualisatie-strategie inkleuren kaart (theoretisch)
+    * Analyse
+    * Kort documenteren van deze strategie
+    * Voorlopig enkel rekening gehouden met Protanomalie/Protanopie (zie sectie 'Kleurenblindheid' voor meer info)
 * To Do/Optimalisaties
   * Voorlopig worden de verschillen tussen de gemeentes in de csv data-sets en de TopoJSON weerspiegelt in een aantal constanten die vervolgens gebruikt worden in de verwerking van de alignering tussen de gemeentes van de csv data-sets en de TopoJSON. Een mogelijke optimalisatie is dat deze dynamisch bepaald zouden worden door de data-sets met mekaar te vergelijken.
   * Uitzoeken layout optimalisaties Scatterplots (bron: Fundamentals of Data Visualization)
@@ -428,6 +432,37 @@ folium.Choropleth(geo_data=topojson_data,
 
 #### Gebruikte bronnen
 * TopoJSON-based Choropleth Visualization using Folium (Yash Sanghvi, Aug 13, 2020). https://medium.com/tech-carnot/topojson-based-choropleth-visualization-using-folium-471113fa5964
+
+### Kleurenblindheid
+
+* Duiding:
+  * Stoornissen
+    * Protanomalie/Protanopie: L-kegels (rood) ontbreken/verminderd
+    * Deuteranomalie/Deuteranopie: M-kegels (groen) ontbreken/verminderd
+    * Tritanomalie/Tritanopie: S-kegels (blauw) ontbreken/verminderd
+  * Soorten kleurenblindheid
+    * Rood-groen kleurenblindheid (Protanomalie, Deuteranomalie, Protanopie, Deuteranopie)
+    * Blauw-geel kleurenblindheid (Tritanomalie of Tritanoop)
+    * Andere vormen van kleurenblindheid:
+      * Achromatopsie:
+        * Zeer zeldzaam
+        * Kleurenkegels in het oog werken helemaal niet. Mensen zien enkel zwart, wit en grijstinten
+      * Monochromatopsie
+        * Zeer zeldzaam
+        * Werkt maar één type kegeltje in het oog
+        * Zeer slecht zicht en lichtschuwheid
+    * Cijfers:
+      * 8% van de mannen is kleurenblind
+      * 0.5% van de vrouwen is kleurenblind
+      * OOrzaak: erfelijk
+  * Oplossing
+    * Een oplossing die rekening houdt met alle vormen van kleurenblindheid lijkt een vrij ingewikkelde zaak te zijn.
+    * In het project wordt enkel rekening gehouden met 'Rood-groen'-kleurenblindheid omdat hier nog kleurenpaletten voorhanden zijn die door het grootste deel van de bevolking erg goed leesbaar zijn. Wanneer er rekening zou dienen gehouden te worden met andere vormen van kleurenblindheid zal dit wellicht voor de overgrote meerderheid van de bevolking een minder goed leesbaar resultaat opleveren. Er is de voorkeur gegeven aan de meerderheid omdat de andere vormen van kleurenblindheid eerder zeldzaam zijn.
+    * Men zou een oplossing kunnen aanreiken waar er via een widget gekozen kan worden tussen verschillende soorten weergave zodat elke groep zijn keuze kan maken.
+#### Gebruikte bronnen
+* AI: LLM
+* Fundamentals of Data Visualization - A Primer on Making Informative and Compelling Figures (Clause O. Wilke, 2019)
+* Oogartsen.nl: https://www.oogartsen.nl/glasvocht-netvlies/kleurenzien-en-blindheid/
 
 ## Initieel Projectvoorstel 
 
