@@ -93,6 +93,10 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
   * Data Ingestion, cleanup en transformaties implementeren voor csv dataset 'aandeel 65+'
     * Deze keer geïmplementeerd met data-frames in combinatie met SQL
     * Reden: andere vorm van coderen dan rechtstreeks met RDD's te werken (leer-proces andere manier van implementeren)
+  * Toevoegen scatterplot voor antibiotica consumptie en percentage 65+
+    * Toont of er al dan niet een correlatie is tussen deze sets
+    * Controles maken ook gebruik van data-frames icm. SQL ipv RDD's (leer-proces andere manier van implementeren)
+  * Refactorings in de code (optimalisatie)
   * Herbekijken visualisatie-strategie inkleuren kaart (verband aantal 65+ en antibiotica consumptie)
     * Analyse (met behulp van AI)
     * Documenteren van deze strategie
