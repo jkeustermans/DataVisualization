@@ -101,10 +101,12 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
     * Reden: 8% vd mannen is kleurenblind en 0.5% vd vrouwen waardoor dit een significante groep vormt waar men best rekening mee houdt tijdens de visualisatie
     * Opmerking: ik heb voorlopig geen kleurenpallet gevonden dat rekening houdt met 'Rood-groen'-kleurenblindheid
   * Refactorings in de code (optimalisatie)
+* Analyse
   * Herbekijken visualisatie-strategie inkleuren kaart (theoretisch)
     * Analyse
     * Kort documenteren van deze strategie
     * Voorlopig enkel rekening gehouden met Protanomalie/Protanopie (zie sectie 'Kleurenblindheid' voor meer info)
+  * Korte analyse kleurenblindheid en kleurenpaletten
 * To Do/Optimalisaties
   * Voorlopig worden de verschillen tussen de gemeentes in de csv data-sets en de TopoJSON weerspiegelt in een aantal constanten die vervolgens gebruikt worden in de verwerking van de alignering tussen de gemeentes van de csv data-sets en de TopoJSON. Een mogelijke optimalisatie is dat deze dynamisch bepaald zouden worden door de data-sets met mekaar te vergelijken.
   * Uitzoeken layout optimalisaties Scatterplots (bron: Fundamentals of Data Visualization)
