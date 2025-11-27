@@ -3,8 +3,8 @@
 # Inhoudsopgave
 1. Logboek
     - Week 1
-    - Week 2 (To Do)
-    - Week 3 (To Do)
+    - Week 2
+    - Week 3
     - Week 4 (To Do)
     - Week 5 (To Do)
 2. Projectvoorstel
@@ -112,6 +112,17 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
   * Uitzoeken layout optimalisaties Scatterplots (bron: Fundamentals of Data Visualization)
   * Uitzoeken layout optimalisaties Choropleths (bron: Fundamentals of Data Visualization)
   * Analyse van correctheid van data-visualisatie voor verband 'aandeel 65+' en 'antbiotica consumptie' (eerste aanzet reeds gegeven - zie hierboven)
+
+### Week 3
+Tijdens week 3 zijn de volgende zaken geïmplementeerd:
+* Algemeen
+  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige data-sets
+    * Gemiddeld inkomen per inwoner
+    * Activiteitsgraad
+    * Opleidingsniveau
+* Implementatie
+* Analyse
+* To Do
 
 ## Projectvoorstel
 ### Algemeen
