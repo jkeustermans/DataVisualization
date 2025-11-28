@@ -116,11 +116,26 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
 ### Week 3
 Tijdens week 3 zijn de volgende zaken geïmplementeerd:
 * Algemeen
-  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige data-sets
-    * Gemiddeld inkomen per inwoner
-    * Activiteitsgraad
-    * Opleidingsniveau
+  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige 3 data-sets
 * Implementatie
+  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige data-sets
+    * Data-sets
+      * Gemiddeld inkomen per inwoner
+      * Activiteitsgraad
+      * Opleidingsniveau
+    * Oplossen kleine data-set afwijking in gemeentenaam (trim)
+  * Implementatie Z-scores voor data-sets
+    * Introductie User Defined Functions (UDF's)
+  * Implementatie Data-Enrichments
+    * Uitgebreide operaties over de data-sets
+      * Introductie Joins
+      * Grouping & Grouping Functions
+      * Conditional Values
+      * ...
+  * Gebruik van DSL instructies mbt data-frames (ipv. RDD en DF icm SQL)
+    * Reden: educatief - leren omgaan met syntax
+  * Code kwaliteit
+    * Implementatie van common functions (gemiddelde, standaard deviatie, z-score)
 * Analyse
 * To Do
 
