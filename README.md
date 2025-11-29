@@ -136,6 +136,10 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
     * Reden: educatief - leren omgaan met syntax
   * Code kwaliteit
     * Implementatie van common functions (gemiddelde, standaard deviatie, z-score)
+  * Filtering TopoJSON zodat enkel Vlaams en Brussels gewest overblijven
+    * Opmerking: stukje code voor filtering gebeurt niet binnen Spark-Context en is gegenereerd door AI (3 lijnen code)
+    * Reden: lagere prioriteit dan andere aspecten die nog verwezenlijkt diende te worden
+    * To Do: filtering via Spark laten verlopen om oefening te maken op werken met hiërarchische data-structuren
 * Analyse
 * To Do
 
@@ -203,9 +207,9 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
         * Regressiemodel
           * Je kan een enkelvoudige regressie doorvoeren maar de regressielijn geeft enkel het verband weer voor ALLE gemeentes en niet per gemeente
           * Als je per gemeente wil zien of deze 'afwijkend' is dan kan je dit aan de residu van het punt voor die gemeente bepalen
-            * Residue(E(gemeente)) = E(gemeente) - Y(gemeente-voorspelling)
-            * Als E(gemeente) > 0 = meer antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
-            * Als E(gemeente) < 0 = minder antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
+            * Residue(E(gemeente)) = Y(gemeente) - Y(gemeente-voorspelling)
+            * Als Residue(E(gemeente)) > 0 = meer antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
+            * Als Residue(E(gemeente)) < 0 = minder antibiotica geconsumueerd dan verwacht gegeven het aandeel 65+
           * Dit kan je wél visualiseren
           * Wanneer is er sprake van een sterke afwijking?
             * Methode A: op basis van Z-score vh residu
@@ -225,6 +229,14 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
                 * Low-Low cluster = structureel weinig gebruik
                 * High-Low = uitschieter
                 * Low-High = negatieve uitschieter
+              * Moran's I
+                * Moran’s I meet of een variabele geclusterd, verspreid of random is over een ruimte (bijvoorbeeld geografisch gebied).
+                * Het kijkt naar hoe vergelijkbaar waarden in nabijgelegen locaties zijn.
+                * Vb. Zijn hoge huizenprijzen in deze stad gegroepeerd?
+              * Getis-Ord Gi*
+                * Wordt gebruikt voor hotspot-analyse
+                * Het identificeert locaties die significant hoge of lage waarden hebben in hun omgeving
+                * Vb. Welke buurten hebben significant hoge of lage huizenprijzen in vergelijking met omliggende buurten?
               * Dit lijkt me niet erg toepasbaar/relevant voor dit project
 * Inkleuren kaart SES per gemeente
 * Inkleuren kaart bevolkingsdichtheid per gemeente
