@@ -116,16 +116,18 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
 ### Week 3
 Tijdens week 3 zijn de volgende zaken geïmplementeerd:
 * Algemeen
-  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige 3 data-sets
+  * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige 3 data-sets (inkomen, activiteitsgraad en opleiding)
   * Implementatie berekening SES-coëfficiënt voor elke gemeente
-  * Filtering TopoJSON zodat enkel Vlaams en Brussels gewest overblijven
+  * Kaartje afbeelden met de SES-Coëfficiënt voor elke gemeente in Vlaanderen
+  * Scatterplot met enerzijds de SES-Coëfficiënt en anderzijds de antibiotica consumptie voor alle gemeentes
+  * Filtering TopoJSON zodat enkel Vlaams en Brussels gewest afgebeeld worden
 * Implementatie
   * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige data-sets
     * Data-sets
       * Gemiddeld inkomen per inwoner
       * Activiteitsgraad
       * Opleidingsniveau
-    * Oplossen kleine data-set afwijking in gemeentenaam (trim)
+    * Impediment: oplossen kleine data-set afwijking in gemeentenaam (trim)
   * Implementatie Z-scores voor data-sets
     * Introductie User Defined Functions (UDF's)
     * Opmerking: achteraf kwam ik te weten dat het ook opgelost kon worden zonder een UDF en dat dit sneller zou zijn
@@ -137,6 +139,9 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
         * ...
   * Implementatie berekening SES-coëfficiënt voor elke gemeente
     * Impediment: 1 gemeente binnen de 3 data-sets beschikte niet over 1 specifiek data-punt (leidde tot vreemde error)
+  * Visualiseren data omtrent SES-Coëfficiënt
+    * Scatterplot
+    * Kaartje gemeentes Vlaanderen
   * Gebruik van DSL instructies mbt data-frames (ipv. RDD en DF icm SQL)
     * Reden: educatief - leren omgaan met syntax
   * Code kwaliteit
