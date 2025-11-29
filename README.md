@@ -117,6 +117,8 @@ Tijdens week 2 zijn de volgende zaken geïmplementeerd:
 Tijdens week 3 zijn de volgende zaken geïmplementeerd:
 * Algemeen
   * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige 3 data-sets
+  * Implementatie berekening SES-coëfficiënt voor elke gemeente
+  * Filtering TopoJSON zodat enkel Vlaams en Brussels gewest overblijven
 * Implementatie
   * Implementatie van Data Ingestion, Cleanup & Transformaties voor overige data-sets
     * Data-sets
@@ -126,12 +128,15 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
     * Oplossen kleine data-set afwijking in gemeentenaam (trim)
   * Implementatie Z-scores voor data-sets
     * Introductie User Defined Functions (UDF's)
-  * Implementatie Data-Enrichments
-    * Uitgebreide operaties over de data-sets
-      * Introductie Joins
-      * Grouping & Grouping Functions
-      * Conditional Values
-      * ...
+    * Opmerking: achteraf kwam ik te weten dat het ook opgelost kon worden zonder een UDF en dat dit sneller zou zijn
+    * Implementatie Data-Enrichments
+      * Uitgebreide operaties over de data-sets
+        * Introductie Joins
+        * Grouping & Grouping Functions
+        * Conditional Values
+        * ...
+  * Implementatie berekening SES-coëfficiënt voor elke gemeente
+    * Impediment: 1 gemeente binnen de 3 data-sets beschikte niet over 1 specifiek data-punt (leidde tot vreemde error)
   * Gebruik van DSL instructies mbt data-frames (ipv. RDD en DF icm SQL)
     * Reden: educatief - leren omgaan met syntax
   * Code kwaliteit
@@ -139,9 +144,10 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
   * Filtering TopoJSON zodat enkel Vlaams en Brussels gewest overblijven
     * Opmerking: stukje code voor filtering gebeurt niet binnen Spark-Context en is gegenereerd door AI (3 lijnen code)
     * Reden: lagere prioriteit dan andere aspecten die nog verwezenlijkt diende te worden
-    * To Do: filtering via Spark laten verlopen om oefening te maken op werken met hiërarchische data-structuren
+    * To Do/Optimalisatie: filtering via Spark laten verlopen om oefening te maken op werken met hiërarchische data-structuren
 * Analyse
-* To Do
+* To Do/Optimalisaties
+  * Filtering gemeentes van Vlaams of Brussels Gewest via Spark laten lopen
 
 ## Projectvoorstel
 ### Algemeen
