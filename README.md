@@ -5,8 +5,7 @@
     - Week 1
     - Week 2
     - Week 3
-    - Week 4 (To Do)
-    - Week 5 (To Do)
+    - Week 4
 2. Projectvoorstel
 3. Gebruikte Data-Sets
     - Consumptie Antibiotica
@@ -150,9 +149,23 @@ Tijdens week 3 zijn de volgende zaken geïmplementeerd:
     * Opmerking: stukje code voor filtering gebeurt niet binnen Spark-Context en is gegenereerd door AI (3 lijnen code)
     * Reden: lagere prioriteit dan andere aspecten die nog verwezenlijkt diende te worden
     * To Do/Optimalisatie: filtering via Spark laten verlopen om oefening te maken op werken met hiërarchische data-structuren
-* Analyse
 * To Do/Optimalisaties
   * Filtering gemeentes van Vlaams of Brussels Gewest via Spark laten lopen
+
+### Week 4
+Tijdens week 4 zijn de volgende zaken geïmplementeerd:
+* Algemeen
+  * Toevoegen kaartjes voor Vlaanderen voor:
+    - Aandeel 65-plussers per gemeente
+    - Antibiotica consumptie per gemeente
+  * Extra Use case toegevoegd die verloop algemene antibiotica consumptie per jaar laat zien (line-plot & boxplot)
+* Implementatie
+  * Extra use case
+    * Data selection voor extra use case
+    * Afbeelden via een line-plot en een boxplot. Zo opgesteld dat beiden naast mekaar staan zodat de boxplot mooi weergegeven wordt tov. de line-plot
+* Analyse
+* To Do/Optimalisaties
+  - Er kan een statistisch model uitgewerkt worden (wellicht op basis van multipele regressie) waar de varianties per aspect worden berekend
 
 ## Projectvoorstel
 ### Algemeen
